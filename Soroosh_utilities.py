@@ -59,12 +59,14 @@ def zscore_standardizer(x):
     return x_z
 
 
-def add_to_regression_comparison(df, y_preds, y_trues, name):
+def add_to_regression_comparison(df, y_preds, y_trues, name, data_name):
+    df.at[name, 'MAE'] = mae(y_trues=y_trues, y_preds=y_preds)
     df.at[name, 'MRAE'] = mrae(y_trues=y_trues, y_preds=y_preds)
     df.at[name, 'RMSE'] = rmse(y_trues=y_trues, y_preds=y_preds)
     df.at[name, 'R^2-Score'] = metrics.r2_score(y_trues, y_preds)
     # df.at[name, 'Predictions'] = np.asarray(y_preds)
     # df.at[name, 'Ground Truth'] = np.asarray(y_trues)
+    df.to_csv("regression_results-" + data_name + "-.csv")
 
     return df
 
